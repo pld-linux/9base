@@ -1,0 +1,123 @@
+diff -Nur 9base-2/config.mk 9base-2.new/config.mk
+--- 9base-2/config.mk	2006-01-25 14:21:14.000000000 +0000
++++ 9base-2.new/config.mk	2006-01-27 15:38:26.000000000 +0000
+@@ -1,14 +1,14 @@
+ # Customize to fit your system
+ 
+ # paths
+-PREFIX      = /usr/local/9
++PREFIX      = /usr
+ MANPREFIX   = ${PREFIX}/share/man
+ 
+ VERSION     = 2
+ 
+ # Linux/BSD
+-CFLAGS      = -Wall -Wno-missing-braces -Wno-parentheses -Wno-switch -c -I. -DPREFIX="\"${PREFIX}\""
+-LDFLAGS     = -static
++CFLAGS      = $(OPTCFLAGS) -Wall -Wno-missing-braces -Wno-parentheses -Wno-switch -c -I. -DPREFIX="\"${PREFIX}\""
++LDFLAGS     =
+ 
+ # Solaris
+ #CFLAGS      = -fast -xtarget=ultra -D__sun__ -c -I. -DPREFIX="\"${PREFIX}\""
+diff -Nur 9base-2/lib9/Makefile 9base-2.new/lib9/Makefile
+--- 9base-2/lib9/Makefile	2006-01-25 14:21:14.000000000 +0000
++++ 9base-2.new/lib9/Makefile	2006-01-27 15:40:18.000000000 +0000
+@@ -191,8 +191,7 @@
+ 
+ install:
+ 	@mkdir -p ${DESTDIR}${MANPREFIX}/man7
+-	@cp -f regexp.7 ${DESTDIR}${MANPREFIX}/man7
+-	@chmod 444 ${DESTDIR}${MANPREFIX}/man7/regexp.7
++	@cp -f regexp.7 ${DESTDIR}${MANPREFIX}/man7/9regexp.7
+ 
+ uninstall:
+ 	rm -f ${DESTDIR}${MANPREFIX}/man7/regexp.7
+diff -Nur 9base-2/mk/Makefile 9base-2.new/mk/Makefile
+--- 9base-2/mk/Makefile	2006-01-25 14:21:14.000000000 +0000
++++ 9base-2.new/mk/Makefile	2006-01-27 15:39:32.000000000 +0000
+@@ -15,11 +15,10 @@
+ 
+ install: ${TARG}
+ 	@mkdir -p ${DESTDIR}${PREFIX}/bin
+-	@cp -f ${TARG} ${DESTDIR}${PREFIX}/bin/
+-	@chmod 755 ${DESTDIR}${PREFIX}/bin/${TARG}
++	@cp -f ${TARG} ${DESTDIR}${PREFIX}/bin/9${TARG}
++	@chmod 755 ${DESTDIR}${PREFIX}/bin/9${TARG}
+ 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
+-	@cp -f ${MANFILES} ${DESTDIR}${MANPREFIX}/man1
+-	@chmod 444 ${DESTDIR}${MANPREFIX}/man1/${MANFILES}
++	@cp -f ${MANFILES} ${DESTDIR}${MANPREFIX}/man1/9${MANFILES}
+ 
+ uninstall:
+ 	rm -f ${DESTDIR}${PREFIX}/bin/${TARG}
+diff -Nur 9base-2/rc/Makefile 9base-2.new/rc/Makefile
+--- 9base-2/rc/Makefile	2006-01-25 14:21:14.000000000 +0000
++++ 9base-2.new/rc/Makefile	2006-01-27 15:39:07.000000000 +0000
+@@ -26,14 +26,12 @@
+ 
+ install: ${TARG}
+ 	@mkdir -p ${DESTDIR}${PREFIX}/bin
+-	@cp -f ${TARG} ${DESTDIR}${PREFIX}/bin/
+-	@chmod 755 ${DESTDIR}${PREFIX}/bin/${TARG}
++	@cp -f ${TARG} ${DESTDIR}${PREFIX}/bin/9${TARG}
++	@chmod 755 ${DESTDIR}${PREFIX}/bin/9${TARG}
+ 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
+-	@cp -f ${MANFILES} ${DESTDIR}${MANPREFIX}/man1
+-	@chmod 444 ${DESTDIR}${MANPREFIX}/man1/${MANFILES}
+-	@mkdir -p ${DESTDIR}${PREFIX}/etc
+-	@cp -f rcmain ${DESTDIR}${PREFIX}/etc
+-	@chmod 755 ${DESTDIR}${PREFIX}/etc/rcmain
++	@cp -f ${MANFILES} ${DESTDIR}${MANPREFIX}/man1/9${MANFILES}
++	@mkdir -p ${DESTDIR}/etc
++	@cp -f rcmain ${DESTDIR}/etc/9rcmain
+ 
+ uninstall:
+ 	rm -f ${DESTDIR}${PREFIX}/bin/${TARG}
+diff -Nur 9base-2/rc/plan9ish.c 9base-2.new/rc/plan9ish.c
+--- 9base-2/rc/plan9ish.c	2006-01-25 14:21:14.000000000 +0000
++++ 9base-2.new/rc/plan9ish.c	2006-01-27 15:05:25.000000000 +0000
+@@ -27,7 +27,7 @@
+ char*
+ Rcmain(void)
+ {
+-    static char Rcmain[] = PREFIX"/etc/rcmain";
++    static char Rcmain[] = "/etc/9rcmain";
+     char *rcmain = getenv("RCMAIN");
+     return rcmain ? rcmain : Rcmain;
+ }
+diff -Nur 9base-2/std.mk 9base-2.new/std.mk
+--- 9base-2/std.mk	2006-01-25 14:21:14.000000000 +0000
++++ 9base-2.new/std.mk	2006-01-27 15:07:45.000000000 +0000
+@@ -10,11 +10,10 @@
+ 
+ install: ${TARG}
+ 	@mkdir -p ${DESTDIR}${PREFIX}/bin
+-	@cp -f ${TARG} ${DESTDIR}${PREFIX}/bin/
+-	@chmod 755 ${DESTDIR}${PREFIX}/bin/${TARG}
++	@cp -f ${TARG} ${DESTDIR}${PREFIX}/bin/9${TARG}
++	@chmod 755 ${DESTDIR}${PREFIX}/bin/9${TARG}
+ 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
+-	@cp -f ${MANFILES} ${DESTDIR}${MANPREFIX}/man1
+-	@chmod 444 ${DESTDIR}${MANPREFIX}/man1/${MANFILES}
++	@cp -f ${MANFILES} ${DESTDIR}${MANPREFIX}/man1/9${MANFILES}
+ 
+ uninstall:
+ 	rm -f ${DESTDIR}${PREFIX}/bin/${TARG}
+diff -Nur 9base-2/yacc.mk 9base-2.new/yacc.mk
+--- 9base-2/yacc.mk	2006-01-25 14:21:14.000000000 +0000
++++ 9base-2.new/yacc.mk	2006-01-27 15:08:50.000000000 +0000
+@@ -16,11 +16,10 @@
+ 
+ install: ${TARG}
+ 	@mkdir -p ${DESTDIR}${PREFIX}/bin
+-	@cp -f ${TARG} ${DESTDIR}${PREFIX}/bin/
+-	@chmod 755 ${DESTDIR}${PREFIX}/bin/${TARG}
++	@cp -f ${TARG} ${DESTDIR}${PREFIX}/bin/9${TARG}
++	@chmod 755 ${DESTDIR}${PREFIX}/bin/9${TARG}
+ 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
+-	@cp -f ${MANFILES} ${DESTDIR}${MANPREFIX}/man1
+-	@chmod 444 ${DESTDIR}${MANPREFIX}/man1/${MANFILES}
++	@cp -f ${MANFILES} ${DESTDIR}${MANPREFIX}/man1/9${MANFILES}
+ 
+ uninstall:
+ 	rm -f ${DESTDIR}${PREFIX}/bin/${TARG}
