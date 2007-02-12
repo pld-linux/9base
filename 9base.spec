@@ -1,5 +1,5 @@
 Summary:	Port of original Plan 9 userland tools to Unix
-Summary(pl):	Uniksowy port oryginalnych narzêdzi przestrzeni u¿ytkownika systemu Plan 9
+Summary(pl.UTF-8):   Uniksowy port oryginalnych narzÄ™dzi przestrzeni uÅ¼ytkownika systemu Plan 9
 Name:		9base
 Version:	2
 Release:	0.1
@@ -21,14 +21,14 @@ seq, sleep, sort, tee, test, touch, tr, uniq, yacc.
 In PLD all tools was renamed with prefix 9 for not to conflict with
 system tools.
 
-%description -l pl
-9base to uniksowy port nastêpuj±cych oryginalnych narzêdzi przestrzeni
-u¿ytkownika systemu Plan 9:
+%description -l pl.UTF-8
+9base to uniksowy port nastÄ™pujÄ…cych oryginalnych narzÄ™dzi przestrzeni
+uÅ¼ytkownika systemu Plan 9:
 awk, basename, bc, cat, cleanname, date, dc, echo, grep, mk, rc, sed,
 seq, sleep, sort, tee, test, touch, tr, uniq, yacc.
 
-W PLD wszystkim narzêdziom zmieniono nazwê dodaj±c przedrostek 9, aby
-unikn±æ konfliktu z narzêdziami systemowymi.
+W PLD wszystkim narzÄ™dziom zmieniono nazwÄ™ dodajÄ…c przedrostek 9, aby
+uniknÄ…Ä‡ konfliktu z narzÄ™dziami systemowymi.
 
 %prep
 %setup -q
