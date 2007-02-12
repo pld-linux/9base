@@ -1,5 +1,5 @@
 Summary:	Port of original Plan 9 userland tools to Unix
-Summary(pl.UTF-8):   Uniksowy port oryginalnych narzędzi przestrzeni użytkownika systemu Plan 9
+Summary(pl.UTF-8):	Uniksowy port oryginalnych narzędzi przestrzeni użytkownika systemu Plan 9
 Name:		9base
 Version:	2
 Release:	0.1
